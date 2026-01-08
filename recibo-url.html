@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo Credi+ - #<span id="folio-title">...</span></title>
+    <title>Recibo Credi+</title>    
     
     <!-- Optimizado para compartir en WhatsApp -->
     <meta property="og:title" content="Recibo de Pago Credi+">
@@ -548,7 +548,6 @@
 
                 // Llenar el recibo
                 document.getElementById('folio').textContent = params.folio || 'N/A';
-                document.getElementById('folio-title').textContent = params.folio || 'N/A';
                 document.getElementById('fechaCorte').textContent = params.fechaCorte || 'N/A';
                 document.getElementById('distId').textContent = params.distId || 'N/A';
                 document.getElementById('distNombre').textContent = params.distNombre || params.usuario || 'N/A';
