@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibos Credi+</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-primary: #E91E8C;
+            --pink-dark: #C91779;
+            --gray-text: #333;
+            --gray-light: #666;
+            --border-color: #E91E8C;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            background: white;
+            margin: 0 auto 20px;
+            padding: 0.4in;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3in;
+            page-break-after: always;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .page {
+                margin: 0;
+                page-break-after: always;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+
+        .recibo {
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            page-break-inside: avoid;
+        }
+
+        .recibo-header {
+            background: var(--pink-primary);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            background: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--pink-primary);
+        }
+
+        .logo-plus {
+            width: 20px;
+            height: 20px;
+            background: var(--pink-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .logo-subtitle {
+            font-size: 8px;
+            color: var(--pink-primary);
+            font-weight: 500;
+            margin-top: -4px;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-field {
+            text-align: center;
+        }
+
+        .header-label {
+            color: white;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .header-value {
+            background: white;
+            color: var(--gray-text);
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .recibo-body {
+            padding: 12px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .field-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .field-label {
+            background: var(--pink-primary);
+            color: white;
+            padding: 6px 10px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .field-value {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+
+        .field-split {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .field-split .field-item {
+            flex: 1;
+        }
+
+        .payment-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid var(--pink-primary);
+        }
+
+        .payment-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .payment-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .payment-field {
+            flex: 1;
+            text-align: center;
+        }
+
+        .payment-label {
+            background: var(--pink-primary);
+            color: white;
+            padding: 6px 8px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .payment-value {
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-text);
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background: #fafafa;
+        }
+
+        .amount-breakdown {
+            font-size: 10px;
+            line-height: 1.4;
+            white-space: pre-line;
+        }
+
+        .footer-note {
+            margin-top: 10px;
+            padding: 8px;
+            background: #fff3f8;
+            border: 1px solid var(--pink-primary);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 9px;
+            color: var(--pink-dark);
+            font-weight: 500;
+        }
+
+        .controls {
+            max-width: 8.5in;
+            margin: 0 auto 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        button {
+            background: var(--pink-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: var(--pink-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+        <button onclick="location.reload()">🔄 Actualizar</button>
+    </div>
+
+    <!-- Las páginas se generarán dinámicamente aquí -->
+    <div id="recibos-container"></div>
+
+    <script>
+        // Datos de ejemplo - estos vendrían de tu sistema
+        const recibosData = [
+            {
+                folioRecibo: 'P1B0436E1-1',
+                fechaCorte: '12/10/2025',
+                aliadoId: '1',
+                aliadoNombre: 'Aurora Ibarra Cañedo',
+                idCliente: '',
+                cliente: 'ELIZABETH RIOS ROMERO',
+                noVale: 'P1B0436E1',
+                fechaDisp: '3/10/2025',
+                fechaPago: '15/10/2025',
+                numPago: 1,
+                totalPagos: 16,
+                saldoAnterior: 19584,
+                importeAbono: 1224,
+                seguro: 30,
+                pagoCliente: 1254,
+                nuevoSaldo: 18360
+            }
+            // Más recibos aquí...
+        ];
+
+        function formatMoney(amount) {
+            if (amount === null || amount === undefined) return '';
+            return '$' + Number(amount).toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function createReciboHTML(data) {
+            const breakdown = `${formatMoney(data.importeAbono)} + ${formatMoney(data.seguro)} Seguro\n= ${formatMoney(data.pagoCliente)}`;
+            
+            return `
+                <div class="recibo">
+                    <div class="recibo-header">
+                        <div class="logo">
+                            <div>
+                                <div class="logo-text">Credi<span class="logo-plus">+</span></div>
+                                <div class="logo-subtitle">Vales más</div>
+                            </div>
+                        </div>
+                        <div class="header-info">
+                            <div class="header-field">
+                                <div class="header-label">Folio</div>
+                                <div class="header-value">${data.folioRecibo || ''}</div>
+                            </div>
+                            <div class="header-field">
+                                <div class="header-label">Fecha de Corte</div>
+                                <div class="header-value">${data.fechaCorte || ''}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recibo-body">
+                        <div class="field-row">
+                            <div class="field-label">Distribuidor</div>
+                            <div class="field-value">${data.aliadoId || ''}</div>
+                            <div class="field-value">${data.aliadoNombre || ''}</div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-label">Cliente</div>
+                            <div class="field-value">${data.idCliente || ''}</div>
+                            <div class="field-value">${data.cliente || ''}</div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-label">No. Vale</div>
+                            <div class="field-value">${data.noVale || ''}</div>
+                        </div>
+                        
+                        <div class="payment-section">
+                            <div class="payment-row">
+                                <div class="payment-field">
+                                    <div class="payment-label">Fecha de Disposición</div>
+                                    <div class="payment-value">${data.fechaDisp || ''}</div>
+                                </div>
+                                <div class="payment-field">
+                                    <div class="payment-label">Fecha de Pago</div>
+                                    <div class="payment-value">${data.fechaPago || ''}</div>
+                                </div>
+                                <div class="payment-field">
+                                    <div class="payment-label">No. de Pago</div>
+                                    <div class="payment-value">${data.numPago || ''} / ${data.totalPagos || ''}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-row">
+                                <div class="payment-field">
+                                    <div class="payment-label">Saldo Anterior</div>
+                                    <div class="payment-value">${formatMoney(data.saldoAnterior)}</div>
+                                </div>
+                                <div class="payment-field">
+                                    <div class="payment-label">Importe de Pago</div>
+                                    <div class="payment-value amount-breakdown">${breakdown}</div>
+                                </div>
+                                <div class="payment-field">
+                                    <div class="payment-label">Nuevo Saldo</div>
+                                    <div class="payment-value">${formatMoney(data.nuevoSaldo)}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="footer-note">
+                            *Se te cargará un 20% de penalización por incumplimiento de pago en fecha establecida
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRecibos(recibos, cardsPerPage = 6) {
+            const container = document.getElementById('recibos-container');
+            container.innerHTML = '';
+            
+            // Agrupar en páginas
+            for (let i = 0; i < recibos.length; i += cardsPerPage) {
+                const pageRecibos = recibos.slice(i, i + cardsPerPage);
+                const page = document.createElement('div');
+                page.className = 'page';
+                
+                pageRecibos.forEach(recibo => {
+                    page.innerHTML += createReciboHTML(recibo);
+                });
+                
+                container.appendChild(page);
+            }
+        }
+
+        // Renderizar al cargar
+        renderRecibos(recibosData);
+
+        // Para cargar datos desde URL o API
+        function loadRecibosFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataUrl = urlParams.get('data');
+            
+            if (dataUrl) {
+                fetch(dataUrl)
+                    .then(response => response.json())
+                    .then(data => renderRecibos(data))
+                    .catch(error => console.error('Error cargando datos:', error));
+            }
+        }
+
+        // Llamar si hay parámetro en URL
+        if (window.location.search.includes('data=')) {
+            loadRecibosFromURL();
+        }
+    </script>
+</body>
+</html>
