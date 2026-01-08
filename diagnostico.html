@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico - GitHub Pages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #E91E8C;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .status-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid;
+        }
+
+        .status-box.success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .status-box.error {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .status-box.warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        .status-box.info {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+
+        .test-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 24px;
+        }
+
+        .test-label {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .test-result {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .test-result.pass {
+            background: #28a745;
+            color: white;
+        }
+
+        .test-result.fail {
+            background: #dc3545;
+            color: white;
+        }
+
+        .test-result.pending {
+            background: #ffc107;
+            color: black;
+        }
+
+        .btn {
+            background: #E91E8C;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #C91779;
+            transform: translateY(-2px);
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #E91E8C;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .url-box {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #E91E8C;
+            word-break: break-all;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+
+        #diagnosticResults {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Diagnóstico GitHub Pages</h1>
+        <p class="subtitle">Verifica que tu sitio esté configurado correctamente</p>
+
+        <div class="status-box info">
+            <strong>ℹ️ Tu Repositorio:</strong><br>
+            <div class="url-box">https://github.com/automatizaciones-arch/ReciboCredi-</div>
+        </div>
+
+        <div class="status-box info">
+            <strong>🌐 Tu URL de GitHub Pages debería ser:</strong><br>
+            <div class="url-box">https://automatizaciones-arch.github.io/ReciboCredi-/recibo-url.html</div>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn" onclick="runDiagnostics()">▶️ Ejecutar Diagnóstico</button>
+            <a href="https://github.com/automatizaciones-arch/ReciboCredi-/settings/pages" class="btn" target="_blank">⚙️ Abrir Settings</a>
+        </div>
+
+        <div id="diagnosticResults"></div>
+
+        <div class="status-box warning">
+            <strong>⚠️ Si ves error 404:</strong>
+            <ol class="steps">
+                <li>
+                    <strong>Verifica que el archivo existe</strong><br>
+                    Ve a tu repo y confirma que <code>recibo-url.html</code> está en la lista de archivos.
+                </li>
+                <li>
+                    <strong>Habilita GitHub Pages</strong><br>
+                    <a href="https://github.com/automatizaciones-arch/ReciboCredi-/settings/pages" target="_blank">Click aquí para ir a Settings → Pages</a><br>
+                    Configura: Source = "Deploy from a branch", Branch = "main", Folder = "/ (root)"
+                </li>
+                <li>
+                    <strong>Espera 2-3 minutos</strong><br>
+                    GitHub tarda en publicar. Refresca después de esperar.
+                </li>
+                <li>
+                    <strong>Verifica que el repo sea público</strong><br>
+                    GitHub Pages gratis solo funciona con repos públicos (a menos que tengas GitHub Pro).
+                </li>
+            </ol>
+        </div>
+
+        <div class="status-box info">
+            <strong>🧪 URL de Prueba (copia y pega en tu navegador):</strong>
+            <div class="code-box">https://automatizaciones-arch.github.io/ReciboCredi-/recibo-url.html?a=15/10/2025&b=TEST-001&c=CLIENTE%20PRUEBA&d=VALE-001&e=268910&f=30130&g=252998&h=Usuario%20Test</div>
+            <button class="btn" onclick="testURL()">🧪 Probar URL</button>
+        </div>
+
+        <div class="status-box success" style="display:none;" id="successBox">
+            <strong>✅ ¡Funcionó!</strong><br>
+            Tu sitio está configurado correctamente. Ahora puedes usar esta URL en AppSheet.
+        </div>
+    </div>
+
+    <script>
+        const repoOwner = 'automatizaciones-arch';
+        const repoName = 'ReciboCredi-';
+        const fileName = 'recibo-url.html';
+        const baseURL = `https://${repoOwner}.github.io/${repoName}/${fileName}`;
+
+        async function runDiagnostics() {
+            const resultsDiv = document.getElementById('diagnosticResults');
+            resultsDiv.innerHTML = '<h3 style="color: #E91E8C; margin-bottom: 15px;">Ejecutando pruebas...</h3>';
+
+            const tests = [
+                { 
+                    name: 'Verificar si el archivo existe en GitHub',
+                    test: () => checkFileExists()
+                },
+                { 
+                    name: 'Verificar si GitHub Pages está publicado',
+                    test: () => checkGitHubPages()
+                },
+                { 
+                    name: 'Verificar conectividad',
+                    test: () => checkConnectivity()
+                }
+            ];
+
+            for (const test of tests) {
+                const result = await test.test();
+                addTestResult(test.name, result.status, result.message);
+                await sleep(500);
+            }
+        }
+
+        async function checkFileExists() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`);
+                if (response.ok) {
+                    return { status: 'pass', message: 'El archivo existe en el repositorio' };
+                } else {
+                    return { status: 'fail', message: 'El archivo NO existe. Súbelo primero.' };
+                }
+            } catch (error) {
+                return { status: 'fail', message: 'No se pudo verificar: ' + error.message };
+            }
+        }
+
+        async function checkGitHubPages() {
+            try {
+                const testURL = baseURL + '?test=1';
+                const response = await fetch(testURL, { method: 'HEAD', mode: 'no-cors' });
+                // No-cors no nos da status, así que intentamos cargar
+                const img = new Image();
+                return new Promise((resolve) => {
+                    const timeout = setTimeout(() => {
+                        resolve({ status: 'fail', message: 'Timeout. Posiblemente no esté publicado.' });
+                    }, 5000);
+
+                    fetch(baseURL)
+                        .then(res => {
+                            clearTimeout(timeout);
+                            if (res.ok || res.status === 200) {
+                                document.getElementById('successBox').style.display = 'block';
+                                resolve({ status: 'pass', message: '¡GitHub Pages está funcionando!' });
+                            } else {
+                                resolve({ status: 'fail', message: `Error ${res.status}: No publicado o no accesible` });
+                            }
+                        })
+                        .catch(() => {
+                            clearTimeout(timeout);
+                            resolve({ status: 'fail', message: 'No se pudo acceder. Verifica Settings → Pages' });
+                        });
+                });
+            } catch (error) {
+                return { status: 'fail', message: 'Error: ' + error.message };
+            }
+        }
+
+        async function checkConnectivity() {
+            try {
+                const response = await fetch('https://api.github.com', { method: 'HEAD' });
+                return { status: 'pass', message: 'Conectividad OK' };
+            } catch (error) {
+                return { status: 'fail', message: 'Sin conexión a internet' };
+            }
+        }
+
+        function addTestResult(name, status, message) {
+            const resultsDiv = document.getElementById('diagnosticResults');
+            const statusClass = status === 'pass' ? 'pass' : status === 'fail' ? 'fail' : 'pending';
+            const icon = status === 'pass' ? '✅' : status === 'fail' ? '❌' : '⏳';
+            
+            const testHTML = `
+                <div class="test-item">
+                    <span class="icon">${icon}</span>
+                    <span class="test-label">${name}</span>
+                    <span class="test-result ${statusClass}">${message}</span>
+                </div>
+            `;
+            resultsDiv.innerHTML += testHTML;
+        }
+
+        function testURL() {
+            const testURL = baseURL + '?a=15/10/2025&b=TEST-001&c=CLIENTE%20PRUEBA&d=VALE-001&e=268910&f=30130&g=252998&h=Usuario%20Test';
+            window.open(testURL, '_blank');
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Auto-run diagnostics on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(runDiagnostics, 1000);
+        });
+    </script>
+</body>
+</html>
