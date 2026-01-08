@@ -3,84 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test - GitHub Pages Funciona ✅</title>
+    <title>Recibo Credi+ - #<span id="folio-title">...</span></title>
+    
+    <!-- Optimizado para compartir en WhatsApp -->
+    <meta property="og:title" content="Recibo de Pago Credi+">
+    <meta property="og:description" content="Recibo de pago digital">
+    <meta property="og:image" content="https://via.placeholder.com/400x200/E91E8C/FFFFFF?text=Credi%2B">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-primary: #E91E8C;
+            --pink-dark: #C91779;
+            --gray-text: #333;
+            --gray-light: #666;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 20px;
         }
-        .box {
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .recibo {
             background: white;
-            color: #333;
-            padding: 40px;
-            border-radius: 20px;
+            border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
+            animation: slideUp 0.4s ease-out;
         }
-        h1 {
-            color: #E91E8C;
-            font-size: 48px;
-            margin-bottom: 20px;
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        p {
-            font-size: 18px;
-            line-height: 1.6;
+
+        .recibo-header {
+            background: var(--pink-primary);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .success {
-            font-size: 72px;
-            margin-bottom: 20px;
+
+        .recibo-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
         }
-        .info {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 14px;
-            text-align: left;
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
         }
-        .btn {
-            display: inline-block;
-            background: #E91E8C;
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--pink-primary);
+        }
+
+        .logo-plus {
+            width: 32px;
+            height: 32px;
+            background: var(--pink-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin-top: 20px;
             font-weight: bold;
+            font-size: 24px;
+        }
+
+        .logo-subtitle {
+            font-size: 10px;
+            color: var(--pink-primary);
+            font-weight: 500;
+            margin-top: -6px;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .recibo-body {
+            padding: 25px;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: var(--pink-primary);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--pink-primary);
+            border-radius: 2px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--pink-primary);
+        }
+
+        .info-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--gray-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: var(--gray-text);
+            font-weight: 600;
+        }
+
+        .info-value.large {
+            font-size: 18px;
+            color: var(--pink-primary);
+        }
+
+        .amounts-section {
+            background: linear-gradient(135deg, #fff5fa 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #ffe0f0;
+        }
+
+        .amount-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffe0f0;
+        }
+
+        .amount-row:last-child {
+            border-bottom: none;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid var(--pink-primary);
+        }
+
+        .amount-label {
+            font-size: 14px;
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+
+        .amount-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-text);
+        }
+
+        .amount-value.highlight {
+            font-size: 24px;
+            color: var(--pink-primary);
+        }
+
+        .breakdown {
+            font-size: 12px;
+            color: var(--gray-light);
+            margin-top: 4px;
+        }
+
+        .footer-note {
+            background: #fff3f8;
+            border: 2px solid var(--pink-primary);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer-note-text {
+            font-size: 12px;
+            color: var(--pink-dark);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--pink-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--pink-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 30, 140, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: var(--gray-text);
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .error {
+            background: #ff4444;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .actions {
+                display: none;
+            }
+
+            .recibo {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .logo-plus {
+                width: 28px;
+                height: 28px;
+                font-size: 20px;
+            }
+
+            .amount-value.highlight {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div class="success">✅</div>
-        <h1>¡Funciona!</h1>
-        <p>
-            <strong>GitHub Pages está configurado correctamente</strong>
-        </p>
-        <p>
-            Si ves esta página, significa que tu sitio está publicado y funcionando.
-        </p>
-        
-        <div class="info">
-            <strong>📍 Tu URL base es:</strong><br>
-            <code>https://automatizaciones-arch.github.io/ReciboCredi-/</code>
-            <br><br>
-            <strong>✅ Siguiente paso:</strong><br>
-            Sube el archivo <code>recibo-url.html</code> y accede a:<br>
-            <code>https://automatizaciones-arch.github.io/ReciboCredi-/recibo-url.html</code>
+    <div class="container">
+        <div id="loading" class="loading">
+            <div>⏳ Cargando recibo...</div>
         </div>
 
-        <a href="recibo-url.html?a=15/10/2025&b=TEST-001&c=CLIENTE%20PRUEBA&d=VALE-001&e=268910&f=30130&g=252998&h=Usuario%20Test" class="btn">
-            🧪 Probar Recibo
-        </a>
+        <div id="error" style="display: none;"></div>
+
+        <div id="recibo" class="recibo" style="display: none;">
+            <div class="recibo-header">
+                <div class="logo">
+                    <div>
+                        <div class="logo-text">Credi<span class="logo-plus">+</span></div>
+                        <div class="logo-subtitle">Vales más</div>
+                    </div>
+                </div>
+                <div class="header-title">RECIBO DE PAGO</div>
+            </div>
+
+            <div class="recibo-body">
+                <!-- Información del Recibo -->
+                <div class="info-section">
+                    <div class="section-title">📋 Información del Recibo</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Folio</div>
+                            <div class="info-value" id="folio">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fecha de Corte</div>
+                            <div class="info-value" id="fechaCorte">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información del Distribuidor -->
+                <div class="info-section">
+                    <div class="section-title">🏢 Distribuidor</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">ID Distribuidor</div>
+                            <div class="info-value" id="distId">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Nombre</div>
+                            <div class="info-value" id="distNombre">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información del Cliente -->
+                <div class="info-section">
+                    <div class="section-title">👤 Cliente</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">ID Cliente</div>
+                            <div class="info-value" id="clienteId">-</div>
+                        </div>
+                        <div class="info-item full-width">
+                            <div class="info-label">Nombre Completo</div>
+                            <div class="info-value" id="clienteNombre">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información del Vale -->
+                <div class="info-section">
+                    <div class="section-title">🎟️ Información del Vale</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">No. Vale</div>
+                            <div class="info-value" id="noVale">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fecha Disposición</div>
+                            <div class="info-value" id="fechaDisp">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fecha de Pago</div>
+                            <div class="info-value" id="fechaPago">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">No. de Pago</div>
+                            <div class="info-value" id="noPago">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Montos -->
+                <div class="amounts-section">
+                    <div class="section-title">💰 Detalle de Pago</div>
+                    
+                    <div class="amount-row">
+                        <span class="amount-label">Saldo Anterior</span>
+                        <span class="amount-value" id="saldoAnterior">$0.00</span>
+                    </div>
+                    
+                    <div class="amount-row">
+                        <div>
+                            <div class="amount-label">Importe de Pago</div>
+                            <div class="breakdown" id="breakdown">-</div>
+                        </div>
+                        <span class="amount-value" id="importePago">$0.00</span>
+                    </div>
+                    
+                    <div class="amount-row">
+                        <span class="amount-label">Nuevo Saldo</span>
+                        <span class="amount-value highlight" id="nuevoSaldo">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Nota de Penalización -->
+                <div class="footer-note">
+                    <div class="footer-note-text">
+                        ⚠️ *Se te cargará un 20% de penalización por incumplimiento de pago en fecha establecida
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        🖨️ Imprimir
+                    </button>
+                    <button class="btn btn-secondary" onclick="compartirWhatsApp()">
+                        💬 Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name) || '';
+        }
+
+        function decodeValue(value) {
+            try {
+                return decodeURIComponent(value);
+            } catch (e) {
+                return value;
+            }
+        }
+
+        function formatMoney(amount) {
+            if (!amount || isNaN(amount)) return '$0.00';
+            return '$' + Number(amount).toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function decodeMonto(encodedValue) {
+            // Decodifica según tu fórmula: (valor * 13) + 14218
+            // Para recuperar: (encodedValue - 14218) / 13
+            if (!encodedValue || encodedValue === '') return 0;
+            const decoded = (Number(encodedValue) - 14218) / 13;
+            return Math.max(decoded, 0);
+        }
+
+        function loadRecibo() {
+            try {
+                // Leer parámetros de la URL
+                const params = {
+                    fechaCorte: decodeValue(getURLParameter('a')),
+                    folio: decodeValue(getURLParameter('b')),
+                    clienteNombre: decodeValue(getURLParameter('c')),
+                    noVale: decodeValue(getURLParameter('d')),
+                    saldoAnterior: decodeMonto(getURLParameter('e')),
+                    importeAbono: decodeMonto(getURLParameter('f')),
+                    nuevoSaldo: decodeMonto(getURLParameter('g')),
+                    usuario: decodeValue(getURLParameter('h')),
+                    
+                    // Parámetros adicionales opcionales
+                    distId: decodeValue(getURLParameter('i')),
+                    distNombre: decodeValue(getURLParameter('j')),
+                    clienteId: decodeValue(getURLParameter('k')),
+                    fechaDisp: decodeValue(getURLParameter('l')),
+                    fechaPago: decodeValue(getURLParameter('m')),
+                    noPago: decodeValue(getURLParameter('n')),
+                    seguro: Number(getURLParameter('s')) || 0,
+                };
+
+                // Validar que al menos tengamos datos básicos
+                if (!params.folio && !params.clienteNombre) {
+                    throw new Error('Datos insuficientes en la URL');
+                }
+
+                // Calcular desglose si hay seguro
+                let breakdown = '';
+                if (params.seguro > 0) {
+                    const pagoSinSeguro = params.importeAbono - params.seguro;
+                    breakdown = `${formatMoney(pagoSinSeguro)} + ${formatMoney(params.seguro)} Seguro`;
+                }
+
+                // Llenar el recibo
+                document.getElementById('folio').textContent = params.folio || 'N/A';
+                document.getElementById('folio-title').textContent = params.folio || 'N/A';
+                document.getElementById('fechaCorte').textContent = params.fechaCorte || 'N/A';
+                document.getElementById('distId').textContent = params.distId || 'N/A';
+                document.getElementById('distNombre').textContent = params.distNombre || params.usuario || 'N/A';
+                document.getElementById('clienteId').textContent = params.clienteId || 'N/A';
+                document.getElementById('clienteNombre').textContent = params.clienteNombre || 'N/A';
+                document.getElementById('noVale').textContent = params.noVale || 'N/A';
+                document.getElementById('fechaDisp').textContent = params.fechaDisp || 'N/A';
+                document.getElementById('fechaPago').textContent = params.fechaPago || params.fechaCorte || 'N/A';
+                document.getElementById('noPago').textContent = params.noPago || 'N/A';
+                
+                document.getElementById('saldoAnterior').textContent = formatMoney(params.saldoAnterior);
+                document.getElementById('importePago').textContent = formatMoney(params.importeAbono);
+                document.getElementById('nuevoSaldo').textContent = formatMoney(params.nuevoSaldo);
+                document.getElementById('breakdown').textContent = breakdown;
+
+                // Mostrar recibo y ocultar loading
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('recibo').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error cargando recibo:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').className = 'error';
+                document.getElementById('error').innerHTML = `
+                    <strong>⚠️ Error al cargar el recibo</strong><br>
+                    <small>${error.message}</small><br><br>
+                    <small>Por favor verifica que la URL sea correcta.</small>
+                `;
+            }
+        }
+
+        function compartirWhatsApp() {
+            const cliente = document.getElementById('clienteNombre').textContent;
+            const folio = document.getElementById('folio').textContent;
+            const monto = document.getElementById('importePago').textContent;
+            
+            const mensaje = `Hola! 👋\n\nTe comparto tu recibo de pago Credi+:\n\n` +
+                          `📋 Folio: ${folio}\n` +
+                          `💰 Monto: ${monto}\n\n` +
+                          `Ver recibo completo: ${window.location.href}`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        // Cargar el recibo al iniciar
+        window.addEventListener('DOMContentLoaded', loadRecibo);
+    </script>
 </body>
 </html>
