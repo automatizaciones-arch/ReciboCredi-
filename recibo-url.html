@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo Credi+</title>    
+    <title>Recibo Credi+</title>
     
-    <!-- Optimizado para compartir en WhatsApp -->
     <meta property="og:title" content="Recibo de Pago Credi+">
     <meta property="og:description" content="Recibo de pago digital">
     <meta property="og:image" content="https://via.placeholder.com/400x200/E91E8C/FFFFFF?text=Credi%2B">
@@ -189,11 +188,6 @@
             font-weight: 600;
         }
 
-        .info-value.large {
-            font-size: 18px;
-            color: var(--pink-primary);
-        }
-
         .amounts-section {
             background: linear-gradient(135deg, #fff5fa 0%, #ffffff 100%);
             padding: 20px;
@@ -232,12 +226,6 @@
         .amount-value.highlight {
             font-size: 24px;
             color: var(--pink-primary);
-        }
-
-        .breakdown {
-            font-size: 12px;
-            color: var(--gray-light);
-            margin-top: 4px;
         }
 
         .footer-note {
@@ -448,11 +436,18 @@
                     </div>
                     
                     <div class="amount-row">
-                        <div>
-                            <div class="amount-label">Importe de Pago</div>
-                            <div class="breakdown" id="breakdown">-</div>
-                        </div>
+                        <span class="amount-label">Importe de Pago</span>
                         <span class="amount-value" id="importePago">$0.00</span>
+                    </div>
+                    
+                    <div class="amount-row">
+                        <span class="amount-label">Seguro</span>
+                        <span class="amount-value" id="seguroMonto">$0.00</span>
+                    </div>
+                    
+                    <div class="amount-row">
+                        <span class="amount-label">Total a Pagar</span>
+                        <span class="amount-value" id="totalPagar">$0.00</span>
                     </div>
                     
                     <div class="amount-row">
@@ -504,8 +499,6 @@
         }
 
         function decodeMonto(encodedValue) {
-            // Decodifica según tu fórmula: (valor * 13) + 14218
-            // Para recuperar: (encodedValue - 14218) / 13
             if (!encodedValue || encodedValue === '') return 0;
             const decoded = (Number(encodedValue) - 14218) / 13;
             return Math.max(decoded, 0);
@@ -524,14 +517,14 @@
                     nuevoSaldo: decodeMonto(getURLParameter('g')),
                     usuario: decodeValue(getURLParameter('h')),
                     
-                    // Parámetros adicionales opcionales
+                    // Parámetros adicionales
                     distId: decodeValue(getURLParameter('i')),
                     distNombre: decodeValue(getURLParameter('j')),
                     clienteId: decodeValue(getURLParameter('k')),
                     fechaDisp: decodeValue(getURLParameter('l')),
                     fechaPago: decodeValue(getURLParameter('m')),
                     noPago: decodeValue(getURLParameter('n')),
-                    seguro: Number(getURLParameter('s')) || 0,
+                    seguro: decodeMonto(getURLParameter('s')),
                 };
 
                 // Validar que al menos tengamos datos básicos
@@ -539,12 +532,8 @@
                     throw new Error('Datos insuficientes en la URL');
                 }
 
-                // Calcular desglose si hay seguro
-                let breakdown = '';
-                if (params.seguro > 0) {
-                    const pagoSinSeguro = params.importeAbono - params.seguro;
-                    breakdown = `${formatMoney(pagoSinSeguro)} + ${formatMoney(params.seguro)} Seguro`;
-                }
+                // Calcular total a pagar
+                const totalPagar = params.importeAbono + params.seguro;
 
                 // Llenar el recibo
                 document.getElementById('folio').textContent = params.folio || 'N/A';
@@ -560,8 +549,9 @@
                 
                 document.getElementById('saldoAnterior').textContent = formatMoney(params.saldoAnterior);
                 document.getElementById('importePago').textContent = formatMoney(params.importeAbono);
+                document.getElementById('seguroMonto').textContent = formatMoney(params.seguro);
+                document.getElementById('totalPagar').textContent = formatMoney(totalPagar);
                 document.getElementById('nuevoSaldo').textContent = formatMoney(params.nuevoSaldo);
-                document.getElementById('breakdown').textContent = breakdown;
 
                 // Mostrar recibo y ocultar loading
                 document.getElementById('loading').style.display = 'none';
@@ -583,11 +573,11 @@
         function compartirWhatsApp() {
             const cliente = document.getElementById('clienteNombre').textContent;
             const folio = document.getElementById('folio').textContent;
-            const monto = document.getElementById('importePago').textContent;
+            const monto = document.getElementById('totalPagar').textContent;
             
             const mensaje = `Hola! 👋\n\nTe comparto tu recibo de pago Credi+:\n\n` +
                           `📋 Folio: ${folio}\n` +
-                          `💰 Monto: ${monto}\n\n` +
+                          `💰 Total a Pagar: ${monto}\n\n` +
                           `Ver recibo completo: ${window.location.href}`;
             
             const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
